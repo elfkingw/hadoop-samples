@@ -2,10 +2,7 @@ package com.newtouch.hdfs;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -194,6 +191,27 @@ public class HdfsFileSystemService {
             closeFileSystem(fileSystem);
         }
         return content;
+    }
+
+    /**
+     * 获取文件块位置
+     *
+     * @param file  文件
+     * @param start 开始位置
+     * @param len   长度
+     * @return
+     */
+    public BlockLocation[] getFileBlockLocation(String file, long start, long len) {
+        BlockLocation[] fileBlockLocations = null;
+        FileSystem fileSystem = null;
+        try {
+            fileBlockLocations = fileSystem.getFileBlockLocations(new Path(file), start, len);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeFileSystem(fileSystem);
+        }
+        return fileBlockLocations;
     }
 
     /**
