@@ -1,6 +1,7 @@
 package com.newtouch.hdfs;
 
 import junit.framework.TestCase;
+import org.apache.hadoop.fs.BlockLocation;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class HdfsFileSystemServiceTest extends TestCase {
         public void testUploadFile() throws Exception {
         URL url = hdfsFileSystemService.getClass().getClassLoader().getResource("helloworld.txt");
         if(url == null){
-            throw new Exception("本地文件hellowrld.txt不存在！");
+            throw new Exception("本地文件helloworld.txt不存在！");
         }
         String srcFile = url.getPath();
         String dstFile = "/home/test/helloworld.txt";
@@ -67,6 +68,14 @@ public class HdfsFileSystemServiceTest extends TestCase {
         logger.info("文件" + filePath + "读出的内容为\n" + content);
     }
 
+    public void testGetFileBlockLocation() throws Exception {
+        String filePath = "/home/test/helloworld.txt";
+        BlockLocation[] blockLocations = hdfsFileSystemService.getFileBlockLocation(filePath,0,128);
+        for (BlockLocation blockLocation : blockLocations) {
+            logger.info("服务器：{},locationNames:{},StorageIds:{}", blockLocation.getHosts(), blockLocation.getNames(), blockLocation.getStorageIds());
+        }
+    }
+
     public void testDelete() throws Exception {
         String file = "/home/test";
         FileSystem fileSystem = hdfsFileSystemService.getFileSystem();
@@ -76,5 +85,4 @@ public class HdfsFileSystemServiceTest extends TestCase {
         boolean isSuccess = hdfsFileSystemService.delete(file);
         assertTrue(isSuccess);
     }
-
 }

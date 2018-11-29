@@ -205,6 +205,7 @@ public class HdfsFileSystemService {
         BlockLocation[] fileBlockLocations = null;
         FileSystem fileSystem = null;
         try {
+            fileSystem = getFileSystem();
             fileBlockLocations = fileSystem.getFileBlockLocations(new Path(file), start, len);
         } catch (IOException e) {
             e.printStackTrace();
