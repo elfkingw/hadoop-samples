@@ -59,7 +59,7 @@ public class HdfsFileSystemService {
                 logger.info("文件夹{}创建失败！", filepath);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -84,7 +84,7 @@ public class HdfsFileSystemService {
                 logger.info("文件：{}删除失败！", file);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -105,7 +105,7 @@ public class HdfsFileSystemService {
                 logger.info(filestatus.getPath().getName());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -124,7 +124,7 @@ public class HdfsFileSystemService {
             fileSystem.copyToLocalFile(new Path(srcPath), new Path(dstPath));
 
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -142,7 +142,7 @@ public class HdfsFileSystemService {
             fileSystem = getFileSystem();
             fileSystem.copyFromLocalFile(new Path(srcFile), new Path(genHdfsPath(dstFile)));
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -179,14 +179,14 @@ public class HdfsFileSystemService {
             inputSteam = fileSystem.open(new Path(genHdfsPath(file)));
             content = IOUtils.toString(inputSteam, "utf-8");
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("HDFS文件操作失败", e);
         } finally {
             try {
                 if (inputSteam != null) {
                     inputSteam.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                 logger.error("HDFS文件操作失败", e);
             }
             closeFileSystem(fileSystem);
         }
@@ -208,7 +208,7 @@ public class HdfsFileSystemService {
             fileSystem = getFileSystem();
             fileBlockLocations = fileSystem.getFileBlockLocations(new Path(file), start, len);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
@@ -226,7 +226,7 @@ public class HdfsFileSystemService {
                 fileSystem.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("HDFS文件操作失败", e);
         }
     }
 }
