@@ -1,9 +1,10 @@
-package com.newtouch.mapreduce;
+package com.newtouch.mapreduce.wordcount;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.WritableComparable;
 
 public class IntWritableDecreasingComparator extends IntWritable.Comparator {
+
     @Override
     public int compare(WritableComparable a, WritableComparable b) {
         return -super.compare(a, b);

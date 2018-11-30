@@ -36,13 +36,14 @@ public class HdfsFileSystemService {
      *
      * @param filepath 要创建的文件目录
      */
-    public void mkdir(String filepath) {
+    public boolean mkdir(String filepath) {
+        boolean isSuccess  = false;
         FileSystem fileSystem = null;
         try {
             fileSystem = getFileSystem();
             if (fileSystem.exists(new Path(genHdfsPath(filepath)))) {
-                logger.info("{}文件夹已存在！", filepath);
-                return;
+                logger.error("{}文件夹已存在！", filepath);
+                return false;
             } else {
                 logger.info("{}文件夹不存在！", filepath);
             }
@@ -52,17 +53,18 @@ public class HdfsFileSystemService {
 //                    FsAction.ALL, //group action
 //                    FsAction.READ);//other action
             //创建目录 不设置权限,默认为当前hdfs服务器启动用户
-            boolean isSuccess = fileSystem.mkdirs(new Path(genHdfsPath(filepath)));
+            isSuccess = fileSystem.mkdirs(new Path(genHdfsPath(filepath)));
             if (isSuccess) {
                 logger.info("文件夹{}创建成功！", filepath);
             } else {
-                logger.info("文件夹{}创建失败！", filepath);
+                logger.error("文件夹{}创建失败！", filepath);
             }
         } catch (IOException e) {
              logger.error("HDFS文件操作失败", e);
         } finally {
             closeFileSystem(fileSystem);
         }
+        return isSuccess;
     }
 
     /**
@@ -81,7 +83,7 @@ public class HdfsFileSystemService {
             if (isSuccess) {
                 logger.info("文件:{}删除成功！", file);
             } else {
-                logger.info("文件：{}删除失败！", file);
+                logger.error("文件：{}删除失败！", file);
             }
         } catch (IOException e) {
              logger.error("HDFS文件操作失败", e);

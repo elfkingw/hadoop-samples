@@ -1,4 +1,4 @@
-package com.newtouch.mapreduce;
+package com.newtouch.mapreduce.wordcount;
 
 
 import org.apache.hadoop.io.IntWritable;
@@ -8,6 +8,13 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
+/**
+ * Mapper<a,b,c,d>
+ *      a:对应文件啊
+ *      b:对应的文件一行的内容
+ *      c:是输出给reducer的key
+ *      d:是输出给reducer的value
+ */
 public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 
