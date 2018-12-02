@@ -14,6 +14,7 @@ import java.io.IOException;
  *      b:对应的文件一行的内容
  *      c:是输出给reducer的key
  *      d:是输出给reducer的value
+ * @author elfkingw
  */
 public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 

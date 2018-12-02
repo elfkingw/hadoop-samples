@@ -12,6 +12,7 @@ import java.io.IOException;
  *      b:mapper输出的value
  *      c:输出文件的内容 key
  *      d:输出文件的内容 value
+ * @author elfkingw
  */
 public class WordReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 

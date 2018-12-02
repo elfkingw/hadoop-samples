@@ -10,6 +10,7 @@ import java.io.IOException;
 
 /**
  * HDFS文件系统java操作
+ * @author elfkingw
  */
 public class HdfsFileSystemService {
 
@@ -158,10 +159,11 @@ public class HdfsFileSystemService {
      */
     public String genHdfsPath(String path) {
         String hdfsPath;
-        if (path.startsWith("/")) {
+        String fileSeparator = "/";
+        if (path.startsWith(fileSeparator)) {
             hdfsPath = HDFS_ROOT_URL + path;
         } else {
-            hdfsPath = HDFS_ROOT_URL + "/" + path;
+            hdfsPath = HDFS_ROOT_URL + fileSeparator + path;
         }
         return hdfsPath;
     }

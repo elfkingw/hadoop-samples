@@ -3,6 +3,9 @@ package com.newtouch.mapreduce.wordcount;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.WritableComparable;
 
+/**
+ * @author elfkingw
+ */
 public class IntWritableDecreasingComparator extends IntWritable.Comparator {
 
     @Override

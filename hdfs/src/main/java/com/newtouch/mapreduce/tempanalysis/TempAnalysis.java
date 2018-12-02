@@ -21,6 +21,7 @@ import java.io.IOException;
  * 文件中每一行，每项数据用空格隔开例如：
  *  城市  日期  最低温度 最高温度
  * shenzhen 20170101 12 25
+ * @author elfkingw
  */
 public class TempAnalysis {
     private final static String HADOOP_ROOT_URL = "hdfs://dev1:9000";
@@ -57,13 +58,15 @@ public class TempAnalysis {
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
+            String separator = " ";
+            int length =2;
             String[] str = line.split(" ");
-            if (str.length < 2) {
+            if (str.length < length) {
                 return;
             }
             String city = str[0];
-            int minTemp = Integer.valueOf(str[2]);
-            int maxTemp = Integer.valueOf(str[3]);
+            Double minTemp = Double.valueOf(str[2]);
+            Double maxTemp = Double.valueOf(str[3]);
             TemperatureVO temperatureVO = new TemperatureVO(minTemp, maxTemp);
             context.write(new Text(city), temperatureVO);
         }
@@ -74,13 +77,13 @@ public class TempAnalysis {
         @Override
         protected void reduce(Text key, Iterable<TemperatureVO> values, Context context) throws IOException, InterruptedException {
             int count = 0;
-            int minTemp = 1000;
-            int maxTemp = 0;
-            int sumTemp = 0;
-            int avgTemp = 0;
+            Double minTemp = new Double(1000);
+            Double maxTemp = new Double(0);
+            Double sumTemp = new Double(0);
+            Double avgTemp = new Double(0);
             for (TemperatureVO temperatureVO : values) {
-                int minTemperature = temperatureVO.getMinTemp();
-                int maxTemperature = temperatureVO.getMaxTemp();
+                Double minTemperature = temperatureVO.getMinTemp();
+                Double maxTemperature = temperatureVO.getMaxTemp();
                 if (minTemperature < minTemp) {
                     minTemp = minTemperature;
                 }

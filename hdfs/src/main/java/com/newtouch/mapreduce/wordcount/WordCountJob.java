@@ -10,6 +10,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
+/**
+ * @author elfkingw
+ */
 public class WordCountJob {
     private final static String HADOOP_ROOT_URL = "hdfs://dev1:9000";
 
