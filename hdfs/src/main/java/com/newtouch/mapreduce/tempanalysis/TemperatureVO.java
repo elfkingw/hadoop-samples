@@ -21,7 +21,7 @@ public class TemperatureVO implements WritableComparable<TemperatureVO> {
     /**
      * 平均温度
      */
-    private Double avgTemp = new Double(0);
+    private Double avgTemp;
 
     public TemperatureVO() {
     }
@@ -29,6 +29,7 @@ public class TemperatureVO implements WritableComparable<TemperatureVO> {
     public TemperatureVO(Double minTemp, Double maxTemp) {
         this.minTemp = minTemp;
         this.maxTemp = maxTemp;
+        this.avgTemp = new Double(0);
     }
 
 
